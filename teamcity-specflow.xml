@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="teamcity-specflow" default="all">
+  
+  
+  <property file="teamcity-specflow.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.annotations.classpath">
+    <pathelement location="${path.variable.teamcitydistribution}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
+  </path>
+  
+  <path id="library.common-api.classpath">
+    <pathelement location="${path.variable.teamcitydistribution}/devPackage/common-api.jar"/>
+  </path>
+  
+  <path id="library.server-api.classpath">
+    <pathelement location="${path.variable.teamcitydistribution}/devPackage/server-api.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module specflow-server -->
+  
+  <dirname property="module.specflow-server.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.specflow-server" value="${compiler.args}"/>
+  
+  <property name="specflow-server.output.dir" value="${module.specflow-server.basedir}/out/production/specflow-server"/>
+  <property name="specflow-server.testoutput.dir" value="${module.specflow-server.basedir}/out/test/specflow-server"/>
+  
+  <path id="specflow-server.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="specflow-server.module.production.classpath">
+    <path refid="library.server-api.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+  </path>
+  
+  <path id="specflow-server.runtime.production.module.classpath">
+    <pathelement location="${specflow-server.output.dir}"/>
+    <path refid="library.server-api.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+  </path>
+  
+  <path id="specflow-server.module.classpath">
+    <pathelement location="${specflow-server.output.dir}"/>
+    <path refid="library.server-api.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+  </path>
+  
+  <path id="specflow-server.runtime.module.classpath">
+    <pathelement location="${specflow-server.testoutput.dir}"/>
+    <pathelement location="${specflow-server.output.dir}"/>
+    <path refid="library.server-api.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.specflow-server">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.specflow-server">
+    <patternset refid="excluded.from.module.specflow-server"/>
+  </patternset>
+  
+  <path id="specflow-server.module.sourcepath">
+    <dirset dir="${module.specflow-server.basedir}/specflow-server">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.specflow-server" depends="compile.module.specflow-server.production,compile.module.specflow-server.tests" description="Compile module specflow-server"/>
+  
+  <target name="compile.module.specflow-server.production" description="Compile module specflow-server; production classes">
+    <mkdir dir="${specflow-server.output.dir}"/>
+    <javac destdir="${specflow-server.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.specflow-server}"/>
+      <bootclasspath refid="specflow-server.module.bootclasspath"/>
+      <classpath refid="specflow-server.module.production.classpath"/>
+      <src refid="specflow-server.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.specflow-server"/>
+    </javac>
+    
+    <copy todir="${specflow-server.output.dir}">
+      <fileset dir="${module.specflow-server.basedir}/specflow-server/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.specflow-server.tests" depends="compile.module.specflow-server.production" description="compile module specflow-server; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.specflow-server" description="cleanup module">
+    <delete dir="${specflow-server.output.dir}"/>
+    <delete dir="${specflow-server.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.specflow-server" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.specflow-server" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
