@@ -7,6 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="server-api" level="project" />
+    <orderEntry type="library" name="common-api" level="project" />
+    <orderEntry type="library" name="annotations" level="project" />
   </component>
 </module>
 
