@@ -8,5 +8,9 @@ Get-ChildItem $pluginFolder | Remove-Item -Recurse
 Write-Host "Installing plugin"
 Copy-Item ".\dist\specFlowPlugin.zip" $pluginFolder
 
+$logFolder = "C:\TeamCity\logs"
+Write-Host "Cleaning log folder"
+Get-ChildItem $logFolder | Remove-Item
+
 Write-Host "Starting TC service"
 Start-Service teamcity
