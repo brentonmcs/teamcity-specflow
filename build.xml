@@ -9,10 +9,10 @@
   <import file="teamcity-specflow.xml"/>
 
   <target name="package" depends="define.version">
-    <package.teamcity.plugin name="${plugin.name}" server.output="${specflow-server.output.dir}"
-                             server.lib.dir="lib" server.lib.includes="*.jar"
-                             plugin.descriptor.file="${basedir}/teamcity-plugin.xml"
-                             plugin.version="${plugin.version}"/>
+    <package.teamcity.plugin name="${plugin.name}"
+                             server.output="${specflow-server.output.dir}" server.lib.dir="lib" server.lib.includes="*.jar"
+                             agent.output="${specflow-agent.output.dir}"
+                             plugin.descriptor.file="${basedir}/teamcity-plugin.xml" plugin.version="${plugin.version}" />
   </target>
 
   <target name="define.version" depends="define.version.if.under.teamcity">

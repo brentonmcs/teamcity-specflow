@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="openApi-source">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$TeamCityDistribution$/devPackage/src/openApi-source.jar!/" />
+    </SOURCES>
+  </library>
+</component>

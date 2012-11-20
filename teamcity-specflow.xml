@@ -59,12 +59,22 @@
   
   <!-- Project Libraries -->
   
+  <path id="library.agent-api.classpath">
+    <pathelement location="${path.variable.teamcitydistribution}/devPackage/agent-api.jar"/>
+  </path>
+  
   <path id="library.annotations.classpath">
     <pathelement location="${path.variable.teamcitydistribution}/webapps/ROOT/WEB-INF/lib/annotations.jar"/>
   </path>
   
   <path id="library.common-api.classpath">
     <pathelement location="${path.variable.teamcitydistribution}/devPackage/common-api.jar"/>
+  </path>
+  
+  <path id="library.openapi-source.classpath"/>
+  
+  <path id="library.openapi.classpath">
+    <pathelement location="${path.variable.teamcitydistribution}/webapps/ROOT/WEB-INF/lib/openapi.jar"/>
   </path>
   
   <path id="library.server-api.classpath">
@@ -75,6 +85,101 @@
   <!-- Application Server Libraries -->
   
   <!-- Modules -->
+  
+  
+  <!-- Module specflow-agent -->
+  
+  <dirname property="module.specflow-agent.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.specflow-agent" value="${compiler.args}"/>
+  
+  <property name="specflow-agent.output.dir" value="${module.specflow-agent.basedir}/out/production/specflow-agent"/>
+  <property name="specflow-agent.testoutput.dir" value="${module.specflow-agent.basedir}/out/test/specflow-agent"/>
+  
+  <path id="specflow-agent.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="specflow-agent.module.production.classpath">
+    <path refid="library.agent-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.openapi-source.classpath"/>
+    <path refid="library.openapi.classpath"/>
+  </path>
+  
+  <path id="specflow-agent.runtime.production.module.classpath">
+    <pathelement location="${specflow-agent.output.dir}"/>
+    <path refid="library.agent-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.openapi-source.classpath"/>
+    <path refid="library.openapi.classpath"/>
+  </path>
+  
+  <path id="specflow-agent.module.classpath">
+    <pathelement location="${specflow-agent.output.dir}"/>
+    <path refid="library.agent-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.openapi-source.classpath"/>
+    <path refid="library.openapi.classpath"/>
+  </path>
+  
+  <path id="specflow-agent.runtime.module.classpath">
+    <pathelement location="${specflow-agent.testoutput.dir}"/>
+    <pathelement location="${specflow-agent.output.dir}"/>
+    <path refid="library.agent-api.classpath"/>
+    <path refid="library.annotations.classpath"/>
+    <path refid="library.common-api.classpath"/>
+    <path refid="library.openapi-source.classpath"/>
+    <path refid="library.openapi.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.specflow-agent">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.specflow-agent">
+    <patternset refid="excluded.from.module.specflow-agent"/>
+  </patternset>
+  
+  <path id="specflow-agent.module.sourcepath">
+    <dirset dir="${module.specflow-agent.basedir}/specflow-agent">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.specflow-agent" depends="compile.module.specflow-agent.production,compile.module.specflow-agent.tests" description="Compile module specflow-agent"/>
+  
+  <target name="compile.module.specflow-agent.production" description="Compile module specflow-agent; production classes">
+    <mkdir dir="${specflow-agent.output.dir}"/>
+    <javac destdir="${specflow-agent.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.specflow-agent}"/>
+      <bootclasspath refid="specflow-agent.module.bootclasspath"/>
+      <classpath refid="specflow-agent.module.production.classpath"/>
+      <src refid="specflow-agent.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.specflow-agent"/>
+    </javac>
+    
+    <copy todir="${specflow-agent.output.dir}">
+      <fileset dir="${module.specflow-agent.basedir}/specflow-agent/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.specflow-agent.tests" depends="compile.module.specflow-agent.production" description="compile module specflow-agent; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.specflow-agent" description="cleanup module">
+    <delete dir="${specflow-agent.output.dir}"/>
+    <delete dir="${specflow-agent.testoutput.dir}"/>
+  </target>
   
   
   <!-- Module specflow-server -->
@@ -167,9 +272,9 @@
     <!-- Perform any build initialization in this target -->
   </target>
   
-  <target name="clean" depends="clean.module.specflow-server" description="cleanup all"/>
+  <target name="clean" depends="clean.module.specflow-agent, clean.module.specflow-server" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.specflow-server" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.specflow-agent, compile.module.specflow-server" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
 </project>
