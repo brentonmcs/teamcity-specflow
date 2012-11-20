@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
 public class SpecFlowBuildServiceFactory implements AgentBuildRunner, AgentBuildRunnerInfo {
   @NotNull
   public String getType() {
-    return SpecFlowConstants.RUNNER_TYPE;
+      return SpecFlowConstants.RUNNER_TYPE;
   }
 
   public boolean canRun(@NotNull final BuildAgentConfiguration agentConfiguration) {
-    return agentConfiguration.getSystemInfo().isWindows();
+      return agentConfiguration.getSystemInfo().isWindows();
   }
 
   @NotNull
