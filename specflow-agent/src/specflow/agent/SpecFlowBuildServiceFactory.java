@@ -2,8 +2,6 @@ package specflow.agent;
 
 import jetbrains.buildServer.RunBuildException;
 import jetbrains.buildServer.agent.*;
-import jetbrains.buildServer.agent.artifacts.ArtifactsWatcher;
-import jetbrains.buildServer.agent.inspections.InspectionReporter;
 import org.jetbrains.annotations.NotNull;
 
 public class SpecFlowBuildServiceFactory implements AgentBuildRunner, AgentBuildRunnerInfo {
