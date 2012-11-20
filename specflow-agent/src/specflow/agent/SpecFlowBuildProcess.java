@@ -46,7 +46,18 @@ public class SpecFlowBuildProcess implements BuildProcess {
     @Override
     public BuildFinishedStatus waitFor() throws RunBuildException {
        try {
-           RunScenarios();
+           String nunitExePath = "D:\\Tools\\NUnit\\2.6.2\\nunit-console.exe";
+           String assemblyPath = "SpecFlowSample\\bin\\Release\\SpecFlowSample.dll";
+
+           RunScenarios(nunitExePath, assemblyPath);
+
+           if (isInterrupted())
+               return BuildFinishedStatus.INTERRUPTED;
+
+           String specFlowExePath = "D:\\Tools\\SpecFlow\\1.9.0\\specflow.exe";
+           String projectFile = "SpecFlowSample\\SpecFlowSample.csproj";
+
+           GenerateReport(specFlowExePath, projectFile);
 
            if (isInterrupted())
                return BuildFinishedStatus.INTERRUPTED;
@@ -57,14 +68,29 @@ public class SpecFlowBuildProcess implements BuildProcess {
        }
     }
 
-    private void RunScenarios() {
-        GeneralCommandLine generalCommandLine = new GeneralCommandLine();
-        generalCommandLine.setExePath("D:\\Tools\\NUnit\\2.6.2\\nunit-console.exe");
-        generalCommandLine.addParameters("SpecFlowSample\\bin\\Release\\SpecFlowSample.dll", "/labels", "/xml=TestResult.xml");
-        generalCommandLine.setWorkingDirectory(agentRunningBuild.getCheckoutDirectory());
-        logger.message("Command line: " + generalCommandLine.getCommandLineString());
+    private void RunScenarios(String exePath, String assemblyPath) {
+        GeneralCommandLine commandLine = new GeneralCommandLine();
+        commandLine.setExePath(exePath);
+        commandLine.addParameters(assemblyPath, "/labels", "/out=TestResult.txt", "/xml=TestResult.xml");
+        commandLine.setWorkingDirectory(agentRunningBuild.getCheckoutDirectory());
 
-        final ExecResult result = SimpleCommandLineProcessRunner.runCommand(generalCommandLine, null);
+        ExecuteCommand(commandLine);
+    }
+
+    private void GenerateReport(String exePath, String projectFile) {
+        GeneralCommandLine generalCommandLine = new GeneralCommandLine();
+        generalCommandLine.setExePath(exePath);
+        generalCommandLine.addParameters("nunitexecutionreport", projectFile);
+        generalCommandLine.setWorkingDirectory(agentRunningBuild.getCheckoutDirectory());
+
+        ExecuteCommand(generalCommandLine);
+    }
+
+    private void ExecuteCommand(GeneralCommandLine commandLine) {
+        logger.message("Command line: " + commandLine.getCommandLineString());
+
+        final ExecResult result = SimpleCommandLineProcessRunner.runCommand(commandLine, null);
+
         for (String line : result.getOutLines()) {
             logger.message(line);
         }
