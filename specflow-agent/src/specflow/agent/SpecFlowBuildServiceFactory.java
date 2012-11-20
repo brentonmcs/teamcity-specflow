@@ -13,10 +13,7 @@ public class SpecFlowBuildServiceFactory implements AgentBuildRunner, AgentBuild
   }
 
   public boolean canRun(@NotNull final BuildAgentConfiguration agentConfiguration) {
-    if (!agentConfiguration.getSystemInfo().isWindows()) {
-      return false;
-    }
-    return true;
+    return agentConfiguration.getSystemInfo().isWindows();
   }
 
   @NotNull
