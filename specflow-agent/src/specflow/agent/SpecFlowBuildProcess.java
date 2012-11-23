@@ -58,7 +58,7 @@ public class SpecFlowBuildProcess implements BuildProcess {
                return BuildFinishedStatus.INTERRUPTED;
 
            String specFlowExePath = parameters.get(SpecFlowConstants.SPECFLOW_EXE_PATH);
-           String projectFile = "SpecFlowSample\\SpecFlowSample.csproj";
+           String projectFile = parameters.get(SpecFlowConstants.SPECFLOW_PROJECT_FILE);
 
            GenerateReport(specFlowExePath, projectFile);
 

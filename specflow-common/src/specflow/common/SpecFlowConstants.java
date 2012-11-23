@@ -9,4 +9,5 @@ public class SpecFlowConstants {
     public static String NUNIT_CONSOLE_EXE_PATH = "NUnitConsoleExePath";
     public static String SPECFLOW_SCENARIO_ASSEMBLY = "SpecFlowScenarioAssembly";
     public static final String SPECFLOW_EXE_PATH = "SpecFlowExePath";
+    public static final String SPECFLOW_PROJECT_FILE = "SpecFlowProjectFile";
 }

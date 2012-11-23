@@ -31,4 +31,12 @@
             <span class="error" id="error_${sf.specFlowExe}"></span>
         </td>
     </tr>
+    <tr>
+        <th>SpecFlow project file:</th>
+        <td>
+            <props:textProperty name="${sf.specFlowProjectFile}" className="longField"/>
+            <span class="smallNote">Specify path to SpecFlow project file.</span>
+            <span class="error" id="error_${sf.specFlowProjectFile}"></span>
+        </td>
+    </tr>
 </l:settingsGroup>

@@ -14,4 +14,8 @@ public class SpecFlowBean {
     public String getSpecFlowExe() {
         return SpecFlowConstants.SPECFLOW_EXE_PATH;
     }
+
+    public String getSpecFlowProjectFile() {
+        return SpecFlowConstants.SPECFLOW_PROJECT_FILE;
+    }
 }
