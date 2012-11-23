@@ -21,6 +21,7 @@
     <orderEntry type="library" name="common-api" level="project" />
     <orderEntry type="library" name="openApi-source" level="project" />
     <orderEntry type="library" name="openapi" level="project" />
+    <orderEntry type="module" module-name="specflow-common" />
   </component>
 </module>
 

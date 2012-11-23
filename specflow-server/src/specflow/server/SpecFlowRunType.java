@@ -11,6 +11,7 @@ import jetbrains.buildServer.serverSide.RunTypeRegistry;
 import jetbrains.buildServer.web.openapi.PluginDescriptor;
 
 import org.jetbrains.annotations.NotNull;
+import specflow.common.SpecFlowConstants;
 
 public class SpecFlowRunType extends RunType {
   private PluginDescriptor myPluginDescriptor;
@@ -32,12 +33,12 @@ public class SpecFlowRunType extends RunType {
 
   @Override
   public String getEditRunnerParamsJspFilePath() {
-    return null;
+    return myPluginDescriptor.getPluginResourcesPath("editSpecFlowRunParams.jsp");
   }
 
   @Override
   public String getViewRunnerParamsJspFilePath() {
-    return null;
+    return myPluginDescriptor.getPluginResourcesPath("viewSpecFlowRunParams.jsp");
   }
 
   @Override

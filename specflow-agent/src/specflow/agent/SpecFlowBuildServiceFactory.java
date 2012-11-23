@@ -3,6 +3,7 @@ package specflow.agent;
 import jetbrains.buildServer.RunBuildException;
 import jetbrains.buildServer.agent.*;
 import org.jetbrains.annotations.NotNull;
+import specflow.common.SpecFlowConstants;
 
 public class SpecFlowBuildServiceFactory implements AgentBuildRunner, AgentBuildRunnerInfo {
   @NotNull
@@ -19,7 +20,7 @@ public class SpecFlowBuildServiceFactory implements AgentBuildRunner, AgentBuild
   public BuildProcess createBuildProcess(@NotNull AgentRunningBuild agentRunningBuild,
                                          @NotNull BuildRunnerContext buildRunnerContext)
           throws RunBuildException {
-      return new SpecFlowBuildProcess(agentRunningBuild);
+      return new SpecFlowBuildProcess(agentRunningBuild, buildRunnerContext);
   }
 
   @NotNull

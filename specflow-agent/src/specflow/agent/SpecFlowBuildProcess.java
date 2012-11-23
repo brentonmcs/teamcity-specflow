@@ -4,22 +4,23 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import jetbrains.buildServer.ExecResult;
 import jetbrains.buildServer.RunBuildException;
 import jetbrains.buildServer.SimpleCommandLineProcessRunner;
-import jetbrains.buildServer.agent.AgentRunningBuild;
-import jetbrains.buildServer.agent.BuildFinishedStatus;
-import jetbrains.buildServer.agent.BuildProcess;
-import jetbrains.buildServer.agent.BuildProgressLogger;
+import jetbrains.buildServer.agent.*;
 import org.jetbrains.annotations.NotNull;
+import specflow.common.SpecFlowConstants;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SpecFlowBuildProcess implements BuildProcess {
     private final AgentRunningBuild agentRunningBuild;
+    private BuildRunnerContext buildRunnerContext;
     private final AtomicBoolean interrupted = new AtomicBoolean();
     private final AtomicBoolean finished = new AtomicBoolean();
     private final BuildProgressLogger logger;
 
-    public SpecFlowBuildProcess(AgentRunningBuild agentRunningBuild) {
+    public SpecFlowBuildProcess(AgentRunningBuild agentRunningBuild, BuildRunnerContext buildRunnerContext) {
         this.agentRunningBuild = agentRunningBuild;
+        this.buildRunnerContext = buildRunnerContext;
         logger = agentRunningBuild.getBuildLogger();
     }
 
@@ -46,10 +47,12 @@ public class SpecFlowBuildProcess implements BuildProcess {
     @Override
     public BuildFinishedStatus waitFor() throws RunBuildException {
        try {
-           String nunitExePath = "D:\\Tools\\NUnit\\2.6.2\\nunit-console.exe";
+           Map<String,String> parameters = buildRunnerContext.getRunnerParameters();
+
+           String nunitConsoleExePath = parameters.get(SpecFlowConstants.NUNIT_CONSOLE_EXE_PATH);
            String assemblyPath = "SpecFlowSample\\bin\\Release\\SpecFlowSample.dll";
 
-           RunScenarios(nunitExePath, assemblyPath);
+           RunScenarios(nunitConsoleExePath, assemblyPath);
 
            if (isInterrupted())
                return BuildFinishedStatus.INTERRUPTED;

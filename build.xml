@@ -10,8 +10,10 @@
 
   <target name="package" depends="define.version">
     <package.teamcity.plugin name="${plugin.name}"
-                             server.output="${specflow-server.output.dir}" server.lib.dir="lib" server.lib.includes="*.jar"
+                             server.output="${specflow-server.output.dir}" server.resources="specflow-server\resources\specflow"
+                             server.lib.dir="lib" server.lib.includes="*.jar"
                              agent.output="${specflow-agent.output.dir}"
+                             common.output="${specflow-common.output.dir}"
                              plugin.descriptor.file="${basedir}/teamcity-plugin.xml" plugin.version="${plugin.version}" />
   </target>
 

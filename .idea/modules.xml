@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/specflow-agent/specflow-agent.iml" filepath="$PROJECT_DIR$/specflow-agent/specflow-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specflow-common/specflow-common.iml" filepath="$PROJECT_DIR$/specflow-common/specflow-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/specflow-server/specflow-server.iml" filepath="$PROJECT_DIR$/specflow-server/specflow-server.iml" />
     </modules>
   </component>
