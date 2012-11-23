@@ -15,4 +15,12 @@
             <span class="error" id="error_${sf.NUnitConsoleExe}"></span>
         </td>
     </tr>
+    <tr>
+        <th>Scenario assembly:</th>
+        <td>
+            <props:textProperty name="${sf.specFlowScenarioAssembly}" className="longField"/>
+            <span class="smallNote">Enter path to scenario assembly, relative to checkout directory.</span>
+            <span class="error" id="error_${sf.specFlowScenarioAssembly}"></span>
+        </td>
+    </tr>
 </l:settingsGroup>

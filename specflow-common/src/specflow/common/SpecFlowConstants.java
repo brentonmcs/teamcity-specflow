@@ -7,4 +7,5 @@ public class SpecFlowConstants {
     public static String RUNNER_DESCRIPTION = "SpecFlow runner";
 
     public static String NUNIT_CONSOLE_EXE_PATH = "NUnitConsoleExePath";
+    public static String SPECFLOW_SCENARIO_ASSEMBLY = "SpecFlowScenarioAssembly";
 }

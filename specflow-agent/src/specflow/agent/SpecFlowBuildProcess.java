@@ -50,7 +50,7 @@ public class SpecFlowBuildProcess implements BuildProcess {
            Map<String,String> parameters = buildRunnerContext.getRunnerParameters();
 
            String nunitConsoleExePath = parameters.get(SpecFlowConstants.NUNIT_CONSOLE_EXE_PATH);
-           String assemblyPath = "SpecFlowSample\\bin\\Release\\SpecFlowSample.dll";
+           String assemblyPath = parameters.get(SpecFlowConstants.SPECFLOW_SCENARIO_ASSEMBLY);
 
            RunScenarios(nunitConsoleExePath, assemblyPath);
 
