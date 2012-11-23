@@ -57,7 +57,7 @@ public class SpecFlowBuildProcess implements BuildProcess {
            if (isInterrupted())
                return BuildFinishedStatus.INTERRUPTED;
 
-           String specFlowExePath = "D:\\Tools\\SpecFlow\\1.9.0\\specflow.exe";
+           String specFlowExePath = parameters.get(SpecFlowConstants.SPECFLOW_EXE_PATH);
            String projectFile = "SpecFlowSample\\SpecFlowSample.csproj";
 
            GenerateReport(specFlowExePath, projectFile);

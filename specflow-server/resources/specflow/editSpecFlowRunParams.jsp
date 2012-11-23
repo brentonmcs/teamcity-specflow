@@ -23,4 +23,12 @@
             <span class="error" id="error_${sf.specFlowScenarioAssembly}"></span>
         </td>
     </tr>
+    <tr>
+        <th>SpecFlow.exe:</th>
+        <td>
+            <props:textProperty name="${sf.specFlowExe}" className="longField"/>
+            <span class="smallNote">Specify path to specflow.exe.</span>
+            <span class="error" id="error_${sf.specFlowExe}"></span>
+        </td>
+    </tr>
 </l:settingsGroup>

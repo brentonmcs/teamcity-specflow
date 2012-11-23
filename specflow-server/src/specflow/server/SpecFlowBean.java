@@ -10,4 +10,8 @@ public class SpecFlowBean {
     public String getSpecFlowScenarioAssembly() {
         return SpecFlowConstants.SPECFLOW_SCENARIO_ASSEMBLY;
     }
+
+    public String getSpecFlowExe() {
+        return SpecFlowConstants.SPECFLOW_EXE_PATH;
+    }
 }
