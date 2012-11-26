@@ -60,7 +60,7 @@ public class SpecFlowBuildProcess implements BuildProcess {
            String specFlowExePath = parameters.get(SpecFlowConstants.SPECFLOW_EXE_PATH);
            String projectFile = parameters.get(SpecFlowConstants.SPECFLOW_PROJECT_FILE);
 
-           GenerateReport(specFlowExePath, projectFile);
+           GenerateTestExecutionReport(specFlowExePath, projectFile);
 
            if (isInterrupted())
                return BuildFinishedStatus.INTERRUPTED;
@@ -80,7 +80,7 @@ public class SpecFlowBuildProcess implements BuildProcess {
         ExecuteCommand(commandLine);
     }
 
-    private void GenerateReport(String exePath, String projectFile) {
+    private void GenerateTestExecutionReport(String exePath, String projectFile) {
         GeneralCommandLine generalCommandLine = new GeneralCommandLine();
         generalCommandLine.setExePath(exePath);
         generalCommandLine.addParameters("nunitexecutionreport", projectFile);
